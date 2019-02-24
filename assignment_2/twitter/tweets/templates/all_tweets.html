@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Tweeter | {{request.user.username}}</title>
+{% endblock title %}
+
+{% block style %}
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% endblock style %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <br>
+            <h3>My Tweets</h3>
+            <hr>
+            <!-- ALL tweeets -->
+            {% for tweet in tweet_list %}
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <div class="col-md-12">
+                        <h5 class="mt-0">{{tweet.user_key.username}}</h5>
+                        <span class="tweet-timestamp">{{tweet.datetime}}</span>
+                    </div>
+                    <div class="col-md-12">
+                        {{tweet.tweet}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

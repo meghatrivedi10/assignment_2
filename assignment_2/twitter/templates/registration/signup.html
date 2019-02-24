@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Signin</title>
+
+    <!-- Bootstrap css and other css -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/login.css' %}" rel="stylesheet" >
+
+    <!-- Bootstrap and core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/signup.js' %}"></script>
+    <script src="{% static 'vendor/jquery-validate/jquery.validate.min.js' %}"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+
+            <div class="myform form ">
+                <div class="logo mb-3">
+                    <div class="col-md-12 text-center">
+                        <h1>Signup</h1>
+                    </div>
+                </div>
+
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    {{ error|escape }}
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ error|escape }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                <form method="post" name="registration">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input type="text"  name="username" class="form-control" id="id_username"  placeholder="Username">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="id_first_name">First Name</label>
+                            <input type="text"  name="first_name" class="form-control" id="id_first_name" placeholder="First Name">
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label for="id_last_name">Last Name</label>
+                            <input type="text"  name="last_name" class="form-control" id="id_last_name" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email">Email address</label>
+                        <input type="email" name="email"  class="form-control" id="id_email"  placeholder="Email">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="id_password1">Password</label>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="password" name="password1" id="id_password1"  class="form-control"  placeholder="Enter Password">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="password" name="password2" id="id_password2"  class="form-control"  placeholder="Confirm Password">
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center mb-3">
+                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Signup</button>
+                    </div>
+                    <div class="col-md-12 ">
+                        <div class="form-group">
+                            <p class="text-center"><a href="/login">Already have an account?</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

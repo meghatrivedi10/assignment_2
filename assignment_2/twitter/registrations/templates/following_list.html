@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Tweeter | find people</title>
+{% endblock title %}
+
+{% block style %}
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% endblock style %}
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <br><br>
+            <p>Following</p>
+            <hr>
+
+            <!--people suggestion list-->
+
+                {% for user in users_list %}
+
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="mt-0">{{user.username}}</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/unfollow/{{user.id}}"  class="pull-right">Unfollow</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+{% endblock content %}

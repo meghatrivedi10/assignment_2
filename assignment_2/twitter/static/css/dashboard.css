@@ -1,0 +1,13 @@
+.max-char{
+    font-size: 12px;
+    color: grey;
+}
+
+.tweet-box{
+    height: 4em;
+}
+
+.tweet-timestamp{
+    font-size: 12px;
+    color: grey;
+}

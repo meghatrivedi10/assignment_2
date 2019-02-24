@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Tweeter | {{request.user.username}}</title>
+{% endblock title %}
+
+{% block style %}
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+<link href="{% static 'vendor/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
+
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+            <!-- Title -->
+            <h1 class="mt-4">What's happening ? </h1>
+            <div class="card my-4">
+                <div class="card-body">
+                    <form method="post" action="/tweet/save/">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{form.tweet}}
+                            <span class="float-right max-char">140</span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tweet</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Date/Time -->
+            <p>Recent Tweets</p>
+            <hr>
+            <!-- Recent Tweets -->
+            {% for tweet in tweet_list %}
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <div class="col-md-12">
+                        <h5 class="mt-0">{{tweet.user_key.username}}</h5>
+                        <!--<span class="tweet-timestamp">January 1, 2019 at 12:00 PM</span>-->
+                        <span class="tweet-timestamp">{{tweet.datetime}}</span>
+                    </div>
+                    <div class="col-md-12">
+                        {{tweet.tweet}}
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Search</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" id="search_user" class="form-control" placeholder="Search people...">
+                        <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button" id="search_user_btn">Go!</button>
+              </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/follower_list">Followers</a>
+                        </div>
+                        <div class="col-md-6">
+                            {{follower_count}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/following_list">Following</a>
+                        </div>
+                        <div class="col-md-6">
+                            {{followee_count}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/tweet/list">Tweets</a>
+                        </div>
+                        <div class="col-md-6">
+                            {{tweet_count}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<!-- Modal -->
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="error_msg"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+<script src="{% static 'vendor/jquery-ui/jquery-ui.min.js' %}"></script>
+<script>
+    var user_list = [];
+    // autosuggestion to find people
+     $.ajax({
+        url: '/search_user',
+        dataType: 'json',
+        type:"GET",
+        success: function (data) {
+             user_list = data.search_user_list;
+             $( "#search_user" ).autocomplete({
+                source: user_list,
+            });
+        }
+    });
+
+     $("#search_user_btn").click(function(){
+         if ($("#search_user").val()){
+             if (user_list.indexOf($("#search_user").val()) >= 0) {
+                    window.location.href="/user_details/"+ $("#search_user").val();
+            }
+             else {
+                 $("#error_msg").text("User Does not exists");
+                $("#myModal").modal('toggle');
+             }
+        }
+         else {
+              $("#error_msg").text("Please add value in search box");
+             $("#myModal").modal('toggle');
+
+         }
+
+
+     })
+
+</script>
+
+{% endblock content %}

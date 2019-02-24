@@ -1,0 +1,11 @@
+
+body {
+  padding-top: 56px;
+}
+
+.user-name{
+  color: darkgrey;
+}
+/*.footer, .push {*/
+    /*height: 155px; !* .push must be the same height as .footer *!*/
+/*}*/

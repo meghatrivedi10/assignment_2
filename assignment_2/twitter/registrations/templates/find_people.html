@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Tweeter | find people</title>
+{% endblock title %}
+
+{% block style %}
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% endblock style %}
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <br><br>
+            <p>Suggestions</p>
+            <hr>
+
+            <!--people suggestion list-->
+
+                {% for user in people_list %}
+                {% if user != request.user %}
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="mt-0">{{user.username}}</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/follow/{{user.id}}"  class="pull-right">Follow</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+        </div>
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!--&lt;!&ndash; Search Widget &ndash;&gt;-->
+            <!--<div class="card my-4">-->
+                <!--<h5 class="card-header">Search</h5>-->
+                <!--<div class="card-body">-->
+                    <!--<div class="input-group">-->
+                        <!--<input type="text" class="form-control" placeholder="Search people...">-->
+                        <!--<span class="input-group-btn">-->
+                <!--<button class="btn btn-secondary" type="button">Go!</button>-->
+              <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!-- Categories Widget -->
+            <!--<div class="card my-4">-->
+                <!--<div class="card-body">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-6">-->
+                            <!--<a href="#">Followers</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-6">-->
+                            <!--{{follower_count}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-6">-->
+                            <!--<a href="#">Following</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-6">-->
+                            <!--{{followee_count}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-6">-->
+                            <!--<a href="/tweet/list">Tweets</a>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-6">-->
+                            <!--{{tweet_count}}-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+{% endblock content %}

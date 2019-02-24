@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Tweeter | find people</title>
+{% endblock title %}
+
+{% block style %}
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% endblock style %}
+{% block content %}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <br>
+
+
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3 class="mt-0">{{userdetail.username}}</h3>
+                        </div>
+
+                        {% if following_details %}
+
+                        {% if following_details.end is None %}
+                        <div class="col-md-4">
+                            <a href="/unfollow/{{userdetail.id}}"  class="pull-right">Unfollow</a>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+
+                            <br>
+                        </div>
+
+                        {% for tweet in tweets %}
+                        <div class="media mb-4">
+                            <div class="media-body">
+                                <div class="col-md-12">
+                                    <span class="tweet-timestamp">{{tweet.datetime}}</span>
+                                </div>
+                                <div class="col-md-12">
+                                    {{tweet.tweet}}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="col-md-12">
+                            {% else %}
+                            <div class="col-md-4">
+                                <a href="/follow/{{userdetail.id}}"  class="pull-right">Follow</a>
+                            </div>
+                            {% endif %}
+                            {% else %}
+                            <div class="col-md-4">
+                                <a href="/follow/{{userdetail.id}}"  class="pull-right">Follow</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+{% endblock content %}
